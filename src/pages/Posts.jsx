@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
+import {BsTrash} from "react-icons/bs"
+import {CiEdit} from "react-icons/ci"
 import axios from "axios";
 
 const Posts = ({ setCardData, cardData }) => {
@@ -34,7 +36,7 @@ const Posts = ({ setCardData, cardData }) => {
   const handleAdd = async () => {
     try {
       const newPost = await axios.post(`${BASE_URL}`, formData);
-      //! I tried to show how the post count number changes after successfully Adding Post
+      //! I tried to show how the post count changes after successfully adding Post
       if (newPost.status == 201) {
         setCardData([...cardData, newPost]);
         console.log(cardData);
@@ -48,7 +50,7 @@ const Posts = ({ setCardData, cardData }) => {
   const handleDelete = async () => {
     try {
       const deletedPost = await axios.delete(`${BASE_URL}${id}`);
-    //! I tried to show how the post count number changes after successful Delete operations
+    //! I tried to show how the post count changes after successfully delete Post
       if (deletedPost.status == 200) {
         setCardData(cardData.filter((post) => post.id !== Number(id)));
       }
@@ -61,8 +63,6 @@ const Posts = ({ setCardData, cardData }) => {
     try {
       e.preventDefault();
       await axios.put(`${BASE_URL}${id}`, formData);
-
-      console.log(formData);
     } catch (error) {}
   };
 
@@ -98,7 +98,7 @@ const Posts = ({ setCardData, cardData }) => {
 
         <div className="block max-w-sm w-96 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
           <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
-            Description
+            Detail
           </h5>
           <textarea
             onChange={(e) => setFormData({ ...formData, body: e.target.value })}
@@ -108,21 +108,21 @@ const Posts = ({ setCardData, cardData }) => {
           ></textarea>
         </div>
       </form>
-      <div className="mt-5">
+      <div className="flex justify-between w-100 mt-5">
         <button
-          className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+          onClick={handleDelete}
+        >
+         <span className="flex items-center"><BsTrash className="mx-2 text-xl"/>Delete</span> 
+        </button>
+        <button
+          className="mx-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           type="submit"
           onClick={handleSubmit}
         >
-          Edit
+          <span className="flex items-center justify-center "><CiEdit className="mx-2 text-2xl"/>Update</span> 
         </button>
 
-        <button
-          className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-900 focus:outline-none bg-white rounded-lg border border-red-200 hover:bg-red-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-red-200 dark:focus:ring-red-700 dark:bg-red-800 dark:text-red-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700"
-          onClick={handleDelete}
-        >
-          Delete
-        </button>
       </div>
     </div>
   );
