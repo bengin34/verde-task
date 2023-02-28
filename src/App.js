@@ -17,7 +17,7 @@ function App() {
     <Routes>
         <Route path="/" element={ <Home cardData={cardData}  setCardData={setCardData} /> } />
         <Route path="/:id" element={ <Posts cardData={cardData} isMenuOpen={isMenuOpen} setCardData={setCardData}/> } />
-       
+       <Route path="*" element={<NotFound />}/>
       </Routes>
     
       </>
