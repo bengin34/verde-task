@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import axios from "axios";
 
-const Posts = () => {
+const Posts = ({ setCardData, cardData }) => {
   let { id } = useParams();
 
   const [formData, setFormData] = useState({ title: "", body: "" });
@@ -15,9 +15,14 @@ const Posts = () => {
       const response = await axios(BASE_URL + id);
       const data = response.data;
 
-      setFormData({ title: data.title, body: data.body, id:parseInt(id) , userId:1 });
+      setFormData({
+        title: data.title,
+        body: data.body,
+        id: parseInt(id),
+        userId: 1,
+      });
 
-    //   setCard(data);
+      //   setCard(data);
     } catch (error) {
       console.log(error);
     }
@@ -27,40 +32,58 @@ const Posts = () => {
     getData();
   }, []);
 
+  const handleAdd = async () => {
+    try {
+      const newPost = await axios.post(`${BASE_URL}`, formData);
+      //! I tried to show how the post count number changes after successful Add Post
+      if (newPost.status == 201) {
+        setCardData([...cardData, newPost]);
+      }
+      setFormData({ title: "", body: "" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleDelete = async (id) => {
-   const deletedItem = await axios.delete(`${BASE_URL}${id}`)
-    console.log(deletedItem)
-  }
-
-
+    try {
+      const deletedPost = await axios.delete(`${BASE_URL}${id}`);
+      console.log(deletedPost);
+      if (deletedPost.status == 200) {
+        setCardData(cardData.filter((post) => post.id !== id) );
+        console.log(cardData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async (e) => {
-      try {
-        e.preventDefault();
-     await axios.put(`${BASE_URL}${id}`, formData)
-     
-        console.log(formData)
-    } catch (error) {
-        
-    } 
+    try {
+      e.preventDefault();
+      await axios.put(`${BASE_URL}${id}`, formData);
+
+      console.log(formData);
+    } catch (error) {}
   };
 
   return (
     <div className="container flex flex-col items-center">
-    <div className="flex justify-center w-50 mt-4 ">
-      <Link to="/">
-        {" "}
-        <MdArrowBack className="w-12 h-12 mx-5" />{" "}
-      </Link>
-      <button className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        Add New{" "}
-      </button>
-
+      <div className="flex justify-between  mt-4 ">
+        <Link to="/">
+          {" "}
+          <MdArrowBack className="w-12 h-12 mx-7 " />{" "}
+        </Link>
+        <button
+          onClick={handleAdd}
+          className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >
+          Add New{" "}
+        </button>
       </div>
-      <form  onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-          <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white ">
+          <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white ">
             Title
           </h5>
           <textarea
@@ -86,17 +109,20 @@ const Posts = () => {
         </div>
       </form>
       <div className="mt-5">
-      <button
-        className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-        type="submit" onClick={handleSubmit}
-      >
-        Edit
-      </button>
+        <button
+          className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          Edit
+        </button>
 
-      <button className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-900 focus:outline-none bg-white rounded-lg border border-red-200 hover:bg-red-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-red-200 dark:focus:ring-red-700 dark:bg-red-800 dark:text-red-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700"
-      onClick={handleDelete}>
-        Delete
-      </button>
+        <button
+          className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-900 focus:outline-none bg-white rounded-lg border border-red-200 hover:bg-red-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-red-200 dark:focus:ring-red-700 dark:bg-red-800 dark:text-red-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700"
+          onClick={handleDelete}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

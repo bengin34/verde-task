@@ -15,7 +15,7 @@ function App() {
     <Header cardData={cardData} />
     <Routes>
         <Route path="/" element={ <Home cardData={cardData}  setCardData={setCardData} /> } />
-        <Route path="/:id" element={ <Posts/> } />
+        <Route path="/:id" element={ <Posts cardData={cardData}  setCardData={setCardData}/> } />
        
       </Routes>
     
