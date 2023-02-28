@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
-import { BsTrash,BsPlus } from "react-icons/bs";
+import { BsTrash, BsPlus } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
 import axios from "axios";
 
-const Posts = ({ setCardData, cardData }) => {
+const Posts = ({ setCardData, cardData, isMenuOpen }) => {
   let { id } = useParams();
 
   const [formData, setFormData] = useState({ title: "", body: "" });
@@ -78,20 +78,27 @@ const Posts = ({ setCardData, cardData }) => {
 
   return (
     <div className="container  mx-auto flex flex-wrap  justify-center items-center gap-10">
-        <div className=" flex absolute top-20 left-24 md:top-24 gap-5">
+      <div
+        className={`flex absolute ${
+          isMenuOpen ? " top-72" : "top-20"
+        }  left-24 md:top-24 gap-5`}
+      >
         <Link to="/">
-            {" "}
-            <MdArrowBack className="w-12 h-12 p-2 rounded-full bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.07)] " />{" "}
-          </Link>
-          <h2 className="flex text-3xl items-center ">Posts</h2></div>
+          {" "}
+          <MdArrowBack className="w-12 h-12 p-2 rounded-full bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.07)] " />{" "}
+        </Link>
+        <h2 className="flex text-3xl items-center ">Posts</h2>
+      </div>
       <div className="posts md:mt-4 mt-24">
         <div className="flex justify-center gap-24 items-center w-full  mt-4 ">
-          
           <button
             onClick={handleAdd}
             className="font-medium ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
-            <span className="flex items-center gap-2"> <BsPlus className="text-3xl "/> Add New</span> {" "}
+            <span className="flex items-center gap-2">
+              {" "}
+              <BsPlus className="text-3xl " /> Add New
+            </span>{" "}
           </button>
         </div>
         <form onSubmit={handleSubmit}>
@@ -129,7 +136,7 @@ const Posts = ({ setCardData, cardData }) => {
             onClick={handleDelete}
           >
             <span className="flex items-center">
-              <BsTrash className="mx-2 text-xl" />
+              <BsTrash className="mr-2 text-xl" />
               Delete
             </span>
           </button>
@@ -139,16 +146,14 @@ const Posts = ({ setCardData, cardData }) => {
             onClick={handleSubmit}
           >
             <span className="flex items-center justify-center ">
-              <CiEdit className="mx-2 text-2xl" />
+              <CiEdit className="mr-2 text-2xl" />
               Update
             </span>
           </button>
         </div>
       </div>
 
-      
-
-      <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 max-h-[560px] overflow-auto ">
+      <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 max-h-[560px] overflow-auto  m-4 ">
         <div className="flex items-center justify-between mb-4">
           <h5 className="text-xl font-bold mx-auto leading-none text-gray-900 ">
             Comments
@@ -160,9 +165,7 @@ const Posts = ({ setCardData, cardData }) => {
               return (
                 <li className="pt-3 pb-0 sm:pt-4 " key={c.id}>
                   <div className="flex items-center space-x-4">
-                    <div className="flex-shrink-0">
-                    
-                    </div>
+                    <div className="flex-shrink-0"></div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm uppercase font-medium text-gray-900 truncate ">
                         {c.name}
@@ -174,7 +177,6 @@ const Posts = ({ setCardData, cardData }) => {
                         {c.body}
                       </p>
                     </div>
-                 
                   </div>
                 </li>
               );

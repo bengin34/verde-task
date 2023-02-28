@@ -3,8 +3,8 @@ import { BsFillBellFill } from "react-icons/bs";
 import { RiApps2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
-const Header = ({ cardData }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const Header = ({ cardData,setIsMenuOpen, isMenuOpen }) => {
+  
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
