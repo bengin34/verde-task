@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { BsFillBellFill } from "react-icons/bs";
 import { RiApps2Fill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ cardData }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -12,7 +13,7 @@ const Header = () => {
     <div className="dark">
       <nav className=" bg-white border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-gray-900">
         <div className="flex flex-wrap items-center justify-between mx-auto">
-          <a href="https://flowbite.com/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img
               src="https://flowbite.com/docs/images/logo.svg"
               className="h-6 mr-3 sm:h-9"
@@ -21,7 +22,7 @@ const Header = () => {
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
               Arbit Blog
             </span>
-          </a>
+          </Link>
 
           <button
             data-collapse-toggle="navbar-default"
@@ -54,8 +55,8 @@ const Header = () => {
           >
             <ul className="flex flex-col items-center p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <a
-                  href=""
+                <Link
+                  to="/"
                   className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent relative"
                   aria-current="page"
                 >
@@ -72,25 +73,25 @@ const Header = () => {
                     }}
                   >
                     {" "}
-                    2{" "}
+                    {cardData.length}{" "}
                   </div>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href=""
+                <Link
+                  to=""
                   className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   <BsFillBellFill />
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href=""
+                <Link
+                  to=""
                   className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   <RiApps2Fill />
-                </a>
+                </Link>
               </li>
               <li>
                 <img
