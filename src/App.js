@@ -2,13 +2,14 @@ import { Routes, Route, useParams } from "react-router-dom"
 import Header from "./components/Header";
 import Posts from "./pages/Posts";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import { useState } from "react";
 
 
 function App() {
   const [cardData ,setCardData] = useState([])
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-// const [displayCard, setDisplayCard] = useState({title , description })
+
 
   return (
 
