@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Posts = () => {
   let { id } = useParams();
-//   const [card, setCard] = useState({});
+
   const [formData, setFormData] = useState({ title: "", body: "" });
 
   const BASE_URL = "https://jsonplaceholder.typicode.com/posts/";
@@ -27,10 +27,19 @@ const Posts = () => {
     getData();
   }, []);
 
+
+  const handleDelete = async (id) => {
+   const deletedItem = await axios.delete(`${BASE_URL}${id}`)
+    console.log(deletedItem)
+  }
+
+
+
   const handleSubmit = async (e) => {
       try {
         e.preventDefault();
-        await axios.patch(`https://jsonplaceholder.typicode.com/posts/1`, formData)
+     await axios.put(`${BASE_URL}${id}`, formData)
+     
         console.log(formData)
     } catch (error) {
         
@@ -38,16 +47,18 @@ const Posts = () => {
   };
 
   return (
-    <div className="items-center">
+    <div className="container flex flex-col items-center">
+    <div className="flex justify-center w-50 mt-4 ">
+      <Link to="/">
+        {" "}
+        <MdArrowBack className="w-12 h-12 mx-5" />{" "}
+      </Link>
       <button className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
         Add New{" "}
       </button>
 
-      <Link to="/">
-        {" "}
-        <MdArrowBack className="w-12 h-12" />{" "}
-      </Link>
-      <form action="" onSubmit={handleSubmit}>
+      </div>
+      <form  onSubmit={handleSubmit}>
         <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
           <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white ">
             Title
@@ -62,7 +73,7 @@ const Posts = () => {
           ></textarea>
         </div>
 
-        <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <div className="block max-w-sm w-96 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
           <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
             Description
           </h5>
@@ -73,17 +84,20 @@ const Posts = () => {
             required
           ></textarea>
         </div>
+      </form>
+      <div className="mt-5">
       <button
         className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-        type="submit"
+        type="submit" onClick={handleSubmit}
       >
         Edit
       </button>
-      </form>
 
-      <button className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-900 focus:outline-none bg-white rounded-lg border border-red-200 hover:bg-red-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-red-200 dark:focus:ring-red-700 dark:bg-red-800 dark:text-red-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700">
+      <button className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-900 focus:outline-none bg-white rounded-lg border border-red-200 hover:bg-red-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-red-200 dark:focus:ring-red-700 dark:bg-red-800 dark:text-red-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700"
+      onClick={handleDelete}>
         Delete
       </button>
+      </div>
     </div>
   );
 };
