@@ -11,7 +11,7 @@ const Header = ({ cardData }) => {
   };
   return (
     <div className="dark">
-      <nav className=" bg-white border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-gray-900">
+      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
         <div className="flex flex-wrap items-center justify-between mx-auto">
           <Link to="/" className="flex items-center">
             <img
