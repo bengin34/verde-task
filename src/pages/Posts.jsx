@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
-import { BsTrash } from "react-icons/bs";
+import { BsTrash,BsPlus } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
 import axios from "axios";
 
@@ -69,53 +69,55 @@ const Posts = ({ setCardData, cardData }) => {
 
   const getCommentsFromApi = async () => {
     try {
-      const comments = await axios(`${BASE_URL}${id}/comments`);
-      setComments(comments);
+      const commentsData = await axios(`${BASE_URL}${id}/comments`);
+      setComments(commentsData.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="container  mx-auto flex  justify-center items-center gap-10">
-      <div className="posts">
-        <div className="flex justify-center gap-24 items-center w-full  mt-4 ">
-          <Link to="/">
+    <div className="container  mx-auto flex flex-wrap  justify-center items-center gap-10">
+        <div className=" flex absolute top-20 left-24 md:top-24 gap-5">
+        <Link to="/">
             {" "}
-            <MdArrowBack className="w-12 h-12 " />{" "}
+            <MdArrowBack className="w-12 h-12 p-2 rounded-full bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.07)] " />{" "}
           </Link>
-          <h2 className="flex text-3xl items-center ">Posts</h2>
+          <h2 className="flex text-3xl items-center ">Posts</h2></div>
+      <div className="posts md:mt-4 mt-24">
+        <div className="flex justify-center gap-24 items-center w-full  mt-4 ">
+          
           <button
             onClick={handleAdd}
-            className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            className="font-medium ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
-            Add New{" "}
+            <span className="flex items-center gap-2"> <BsPlus className="text-3xl "/> Add New</span> {" "}
           </button>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white ">
+          <div className="block max-w-sm p-6 rounded-lg shadow bg-gray-800 border-gray-700 hover:bg-gray-700">
+            <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white  ">
               Title
             </h5>
             <textarea
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
-              className="font-normal rounded-lg p-2 w-full h-24 text-gray-700 dark:text-g/2ray-400 "
+              className="font-normal rounded-lg p-2 w-full h-24 text-gray-700  "
               value={formData.title}
               required
             ></textarea>
           </div>
 
-          <div className="block max-w-sm w-96 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
+          <div className="block max-w-sm w-96 p-6  rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 mt-1">
+            <h5 className="mb-2 text-md font-bold tracking-tight text-white">
               Detail
             </h5>
             <textarea
               onChange={(e) =>
                 setFormData({ ...formData, body: e.target.value })
               }
-              className="font-normal w-full rounded-lg h-72 p-2 text-gray-700 dark:text-gray-400"
+              className="font-normal w-full rounded-lg h-72 p-2  text-gray-700 "
               value={formData.body}
               required
             ></textarea>
@@ -144,38 +146,35 @@ const Posts = ({ setCardData, cardData }) => {
         </div>
       </div>
 
-      <div className="comments"></div>
+      
 
-      <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 max-h-96 ">
+      <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 max-h-[560px] overflow-auto ">
         <div className="flex items-center justify-between mb-4">
-          <h5 className="text-xl font-bold leading-none text-gray-900 ">
+          <h5 className="text-xl font-bold mx-auto leading-none text-gray-900 ">
             Comments
           </h5>
         </div>
         <div className="flow-root">
           <ul role="list" className="divide-y divide-gray-200 ">
-            {comments?.map(() => {
+            {comments?.map((c) => {
               return (
-                <li className="pt-3 pb-0 sm:pt-4">
+                <li className="pt-3 pb-0 sm:pt-4 " key={c.id}>
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
-                      <img
-                        className="w-8 h-8 rounded-full"
-                        src="/docs/images/people/profile-picture-5.jpg"
-                        alt="Thomas image"
-                      />
+                    
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate ">
-                        Thomes Lean
+                      <p className="text-sm uppercase font-medium text-gray-900 truncate ">
+                        {c.name}
                       </p>
-                      <p className="text-sm text-gray-500 truncate ">
-                        email@windster.com
+                      <p className="text-sm text-gray-500 truncate mt-1">
+                        {c.email}
+                      </p>
+                      <p className="text-sm font-medium text-gray-900 my-2  ">
+                        {c.body}
                       </p>
                     </div>
-                    <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
-                      $2367
-                    </div>
+                 
                   </div>
                 </li>
               );
