@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Posts = ({ setCardData, cardData }) => {
   let { id } = useParams();
-
+  console.log(id);
   const [formData, setFormData] = useState({ title: "", body: "" });
 
   const BASE_URL = "https://jsonplaceholder.typicode.com/posts/";
@@ -22,7 +22,6 @@ const Posts = ({ setCardData, cardData }) => {
         userId: 1,
       });
 
-      //   setCard(data);
     } catch (error) {
       console.log(error);
     }
@@ -35,9 +34,10 @@ const Posts = ({ setCardData, cardData }) => {
   const handleAdd = async () => {
     try {
       const newPost = await axios.post(`${BASE_URL}`, formData);
-      //! I tried to show how the post count number changes after successful Add Post
+      //! I tried to show how the post count number changes after successfully Adding Post
       if (newPost.status == 201) {
         setCardData([...cardData, newPost]);
+        console.log(cardData);
       }
       setFormData({ title: "", body: "" });
     } catch (error) {
@@ -45,13 +45,12 @@ const Posts = ({ setCardData, cardData }) => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
       const deletedPost = await axios.delete(`${BASE_URL}${id}`);
-      console.log(deletedPost);
+    //! I tried to show how the post count number changes after successful Delete operations
       if (deletedPost.status == 200) {
-        setCardData(cardData.filter((post) => post.id !== id) );
-        console.log(cardData);
+        setCardData(cardData.filter((post) => post.id !== Number(id)));
       }
     } catch (error) {
       console.log(error);
@@ -69,11 +68,12 @@ const Posts = ({ setCardData, cardData }) => {
 
   return (
     <div className="container flex flex-col items-center">
-      <div className="flex justify-between  mt-4 ">
+      <div className="flex justify-between w-1/2  mt-4 ">
         <Link to="/">
           {" "}
-          <MdArrowBack className="w-12 h-12 mx-7 " />{" "}
+          <MdArrowBack className="w-12 h-12 " />{" "}
         </Link>
+        <h2 className="flex items-center ">Posts</h2>
         <button
           onClick={handleAdd}
           className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
