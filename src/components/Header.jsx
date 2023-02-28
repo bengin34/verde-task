@@ -1,11 +1,8 @@
-import React, { useState } from "react";
 import { BsFillBellFill } from "react-icons/bs";
 import { RiApps2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
-const Header = ({ cardData,setIsMenuOpen, isMenuOpen }) => {
-  
-
+const Header = ({ cardData, setIsMenuOpen, isMenuOpen }) => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -58,7 +55,7 @@ const Header = ({ cardData,setIsMenuOpen, isMenuOpen }) => {
                 <Link
                   to="/"
                   className="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 relative text-xl"
-                  aria-current="page" 
+                  aria-current="page"
                 >
                   Posts
                   <div

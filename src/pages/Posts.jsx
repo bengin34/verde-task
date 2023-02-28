@@ -35,20 +35,19 @@ const Posts = ({ setCardData, cardData, isMenuOpen }) => {
   }, []);
 
   const handleAdd = async () => {
-    if(formData.title.trim() === "" || formData.body.trim() === ""){
-      if(!formData.title && !formData.body ){
-        alert("Post can not be blank")
-      }else if (!formData.title) {
+    if (formData.title.trim() === "" || formData.body.trim() === "") {
+      if (!formData.title && !formData.body) {
+        alert("Post can not be blank");
+      } else if (!formData.title) {
         alert("Title can not be blank");
       } else if (!formData.body) {
         alert("Detail can not blank");
       }
-       return;
+      return;
     }
     try {
       const newPost = await axios.post(`${BASE_URL}`, formData);
       //! I tried to show how the post count changes after successfully adding Post
-      
       if (newPost.status == 201) {
         setCardData([...cardData, newPost]);
         console.log(cardData);
