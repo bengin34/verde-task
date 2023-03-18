@@ -1,6 +1,6 @@
 
 ## Project title
-# Verde Inc. Test
+# Verde Inc. Task: Blog App
 
 ## Motivation
 This is a task that assigned to me in interview. 
