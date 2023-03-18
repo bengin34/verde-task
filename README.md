@@ -18,7 +18,7 @@ At that time I did not know how to use useContext Hook, Router and Redux.
 
 ## API Reference
 
-https://www.themoviedb.org/documentation/api
+JSON placeholder API
 
 ## How to use?
 As a logged in user can see the messages on main page and its comments that stored in JSON placeholder API
